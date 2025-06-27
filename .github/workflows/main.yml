@@ -1,17 +1,16 @@
-name: Force Build Flutter APK
+name: Force Build APK
 
 on:
   push:
     branches:
-      - master  # غيّرها لفرعك إذا مختلف
+      - main
 
 jobs:
   build:
-    name: Build APK Anyway
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
+    - name: Checkout
       uses: actions/checkout@v3
 
     - name: Set up Flutter
@@ -19,17 +18,23 @@ jobs:
       with:
         flutter-version: '3.22.0'
 
-    - name: Install Dependencies
-      run: flutter pub get || true
+    - name: Install dependencies
+      run: flutter pub get
 
-    - name: Build APK (ignore errors)
-      run: flutter build apk --debug || true
+    - name: Try to build APK (debug)
+      run: |
+        set +e
+        flutter build apk --debug
+        echo "Build finished with code $?"
 
-    - name: List APK Files
-      run: ls -la build/app/outputs/flutter-apk || true
+    - name: Check APK output
+      run: |
+        echo "APK Output files:"
+        ls -la build/app/outputs/flutter-apk || echo "No APK folder found"
 
-    - name: Upload APK (even if failed)
+    - name: Upload APK if exists
       uses: actions/upload-artifact@v4
       with:
-        name: forced-debug-apk
-        path: build/app/outputs/flutter-apk/app-debug.apk
+        name: apk-artifact
+        path: build/app/outputs/flutter-apk/*.apk
+        if-no-files-found: ignore
