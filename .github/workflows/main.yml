@@ -1,4 +1,4 @@
-name: Force Build APK
+name: Build Flutter APK (master branch)
 
 on:
   push:
@@ -21,20 +21,14 @@ jobs:
     - name: Install dependencies
       run: flutter pub get
 
-    - name: Try to build APK (debug)
-      run: |
-        set +e
-        flutter build apk --debug
-        echo "Build finished with code $?"
+    - name: Build APK (debug)
+      run: flutter build apk --debug
 
-    - name: Check APK output
-      run: |
-        echo "APK Output files:"
-        ls -la build/app/outputs/flutter-apk || echo "No APK folder found"
+    - name: Show APK files
+      run: ls -la build/app/outputs/flutter-apk
 
-    - name: Upload APK if exists
+    - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: apk-artifact
-        path: build/app/outputs/flutter-apk/*.apk
-        if-no-files-found: ignore
+        name: debug-apk
+        path: build/app/outputs/flutter-apk/app-debug.apk
