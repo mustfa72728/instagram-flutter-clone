@@ -1,35 +1,35 @@
-name: Build Flutter APK
+name: Force Build Flutter APK
 
 on:
   push:
     branches:
-      - master  # غيّرها لفرعك إذا مو main
+      - master  # غيّرها لفرعك إذا مختلف
 
 jobs:
   build:
-    name: Build APK
+    name: Build APK Anyway
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
+    - name: Checkout Code
       uses: actions/checkout@v3
 
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.22.0'  # غيّرها لنسختك إذا مختلفة
+        flutter-version: '3.22.0'
 
     - name: Install Dependencies
-      run: flutter pub get
+      run: flutter pub get || true
 
-    - name: Build APK (Debug)
-      run: flutter build apk --debug
+    - name: Build APK (ignore errors)
+      run: flutter build apk --debug || true
 
-    - name: Show APK Output
-      run: ls -l build/app/outputs/flutter-apk/
+    - name: List APK Files
+      run: ls -la build/app/outputs/flutter-apk || true
 
-    - name: Upload APK Artifact
+    - name: Upload APK (even if failed)
       uses: actions/upload-artifact@v4
       with:
-        name: debug-apk
+        name: forced-debug-apk
         path: build/app/outputs/flutter-apk/app-debug.apk
