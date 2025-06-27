@@ -44,6 +44,47 @@ class MyApp extends StatelessWidget {
         title: 'Instagram Clone',
         theme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: mobileBackgroundColor,
+          primaryColor: blueColor,
+          colorScheme: const ColorScheme.dark(
+            primary: blueColor,
+            secondary: accentColor,
+            surface: cardColor,
+            background: mobileBackgroundColor,
+            error: errorColor,
+          ),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: mobileBackgroundColor,
+            elevation: 0,
+            iconTheme: IconThemeData(color: primaryColor),
+            titleTextStyle: TextStyle(
+              color: primaryColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+            backgroundColor: mobileBackgroundColor,
+            selectedItemColor: primaryColor,
+            unselectedItemColor: textSecondaryColor,
+            type: BottomNavigationBarType.fixed,
+          ),
+          cardTheme: CardTheme(
+            color: cardColor,
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: blueColor,
+              foregroundColor: primaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 16),
+            ),
+          ),
         ),
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),

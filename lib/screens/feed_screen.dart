@@ -25,19 +25,59 @@ class _FeedScreenState extends State<FeedScreen> {
           : AppBar(
               backgroundColor: mobileBackgroundColor,
               centerTitle: false,
-              title: SvgPicture.asset(
-                'assets/ic_instagram.svg',
-                color: primaryColor,
-                height: 32,
+              elevation: 0,
+              title: Row(
+                children: [
+                  SvgPicture.asset(
+                    'assets/ic_instagram.svg',
+                    color: primaryColor,
+                    height: 32,
+                  ),
+                  const SizedBox(width: 8),
+                  const Text(
+                    'Instagram',
+                    style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Billabong',
+                    ),
+                  ),
+                ],
               ),
               actions: [
                 IconButton(
-                  icon: const Icon(
-                    Icons.messenger_outline,
-                    color: primaryColor,
+                  icon: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: cardColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.favorite_outline,
+                      color: primaryColor,
+                      size: 20,
+                    ),
                   ),
                   onPressed: () {},
                 ),
+                const SizedBox(width: 8),
+                IconButton(
+                  icon: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: cardColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.messenger_outline,
+                      color: primaryColor,
+                      size: 20,
+                    ),
+                  ),
+                  onPressed: () {},
+                ),
+                const SizedBox(width: 16),
               ],
             ),
       body: StreamBuilder(
